@@ -1,12 +1,20 @@
+const Item = require('../models/cartSchema');
 
 const removeItem = (req,res,next)=>{
     console.log("in remove");
+
     res.json({msg:"remove"});
 }
 
-const addItem = (req,res,next)=>{ 
+const addItem = async(req,res,next)=>{ 
     console.log("in add");
-    res.json({msg:"add"});
+    let items = await Item.find();
+    if(items.length>=1){
+        console.log("not empty")
+    }else{
+        console.log(" empty") 
+    }
+    res.json({msg:items});
 }
 
 module.exports = {

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 const cartSchema = mongoose.Schema({
     totalPrice:{type:Number,default:0},
