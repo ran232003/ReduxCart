@@ -7,13 +7,19 @@ const cartSlice = createSlice({
         visible(state){
             state.visible = !state.visible
         },
+        updateCart(state,action){
+            state.items = action.payload.items;
+            state.totalItems = action.payload.totalItems;
+            state.totalPrice = action.payload.totalPrice;
+            state.visible = action.payload.visible;
+        },
         addItems(state,action){
             
             const itemToAdd = action.payload;
             let flag = false;
             
             for(var i = 0; i < state.items.length; i++){
-                if(state.items[i].price == itemToAdd.price && state.items[i].title == itemToAdd.title){
+                if(state.items[i].title == itemToAdd.title){
                     flag = true;
                   
                    state.items[i].total = state.items[i].total + state.items[i].price;

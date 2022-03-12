@@ -1,22 +1,39 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../../store/CartSlice';
 import classes from './CartItem.module.css';
 
 const CartItem = (props) => {
   const { title, quantity, total, price } = props.item;
   const dispatch = useDispatch();
-
+  const cart = useSelector((state)=>{
+    return state.cart;
+  })
 
   const handleAdd = (event)=>{
     const obj = {title:title, price:price};
     dispatch(cartActions.addItems(obj))
-
+    addToCart();
+  }
+  const addToCart = async()=>{
+    const response = await fetch("http://localhost:5000/cart/addItem2",{
+      method:"POST",
+      headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({cart,title,price})
+    })
+  }
+  const removeItem = async()=>{
+    const response = await fetch("http://localhost:5000/cart/removeItem2",{
+      method:"POST",
+      headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({cart,title,price})
+    })
   }
   const handleRemove = (event)=>{
     const obj = {title:title, price:price};
     dispatch(cartActions.removeItem(obj));
-    
+    removeItem();
   }
+  console.log("cart",cart)
   if(total != 0){
   return (
     <li className={classes.item}>

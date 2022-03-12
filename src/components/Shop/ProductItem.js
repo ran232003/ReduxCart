@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { cartActions } from '../../store/CartSlice';
 import Card from '../UI/Card';
@@ -12,8 +13,21 @@ const ProductItem = (props) => {
   const handleSubmit = (event)=>{
     const obj = {price:price,title:title}
     dispatch(cartActions.addItems(obj));
-  }
+    addToCart()
+    
 
+  }
+  const addToCart = async()=>{
+    const response = await fetch("http://localhost:5000/cart/addItem2",{
+      method:"POST",
+      headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({cart,title,price})
+    })
+  }
+  useEffect(()=>{
+    //addToCart();
+  },[])
+ 
   return (
     <li className={classes.item}>
       <Card>
